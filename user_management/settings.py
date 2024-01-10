@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG","False").lower() == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -91,7 +91,8 @@ DATABASES = {
     }
 }
 #postgres://setx_user:22EojxpM8R1dR3KBJQjB2LWTgWdsj4zh@dpg-cmerrdmd3nmc739c74vg-a.oregon-postgres.render.com/setx
-DATABASES['default'] = dj_database_url.parse("postgres://setx_user:22EojxpM8R1dR3KBJQjB2LWTgWdsj4zh@dpg-cmerrdmd3nmc739c74vg-a.oregon-postgres.render.com/setx")
+database_url=os.environ.get("DATABASE_URL")
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
