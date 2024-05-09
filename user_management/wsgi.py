@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'user_management.settings')
+settings_module = 'farm_management_web.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'user_management.settings'
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+
+
 
 application = get_wsgi_application()
